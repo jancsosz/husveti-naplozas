@@ -1,0 +1,40 @@
+<Configuration status="debug">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{${LOG_PATTERN}}"/>
+        </Console>
+        <File name="Request" fileName="request.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <LevelRangeFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <MarkerFilter marker="REQUEST" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+        <File name="Statement" fileName="statement.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <MarkerFilter marker="STATEMENT" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+        <File name="Gyorfi" fileName="Győrfi_Pál.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <TimeFilter start="20:00:00" end="05:00:00" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+        <File name="Nomaker" fileName="nomarker.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <NoMarkerFilter onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="Request"/>
+            <AppenderRef ref="Statement"/>
+            <AppenderRef ref="Gyorfi"/>
+            <AppenderRef ref="Nomaker"/>
+        </Root>
+        <Logger name="pkg.Main" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+</Configuration>
